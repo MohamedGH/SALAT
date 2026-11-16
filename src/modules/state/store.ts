@@ -29,6 +29,7 @@ export interface AppState {
   readonly playbackSpeed: 0.5 | 1 | 1.5;
   readonly cameraPreset: CameraPreset;
   readonly showAlignmentGuides: boolean;
+  readonly showSceneRecitation: boolean;
   readonly controlsCollapsed: boolean;
   readonly diagramMode: DiagramMode;
   readonly selectedDiagramCategory: FiqhCategory;
@@ -52,6 +53,7 @@ export type AppAction =
   | { readonly type: 'SET_PLAYBACK_SPEED'; readonly speed: 0.5 | 1 | 1.5 }
   | { readonly type: 'SET_CAMERA_PRESET'; readonly preset: CameraPreset }
   | { readonly type: 'TOGGLE_ALIGNMENT_GUIDES' }
+  | { readonly type: 'TOGGLE_SCENE_RECITATION' }
   | { readonly type: 'TOGGLE_CONTROLS_COLLAPSED' }
   | { readonly type: 'SET_DIAGRAM_MODE'; readonly mode: DiagramMode }
   | { readonly type: 'SET_DIAGRAM_CATEGORY'; readonly category: FiqhCategory }
@@ -77,6 +79,7 @@ export const createInitialState = (
   playbackSpeed: 1,
   cameraPreset: 'threeQuarter',
   showAlignmentGuides: true,
+  showSceneRecitation: true,
   controlsCollapsed: false,
   diagramMode: 'architecture',
   selectedDiagramCategory: 'pillar',
@@ -157,6 +160,8 @@ export const appReducer = (state: AppState, action: AppAction): AppState => {
       return { ...state, cameraPreset: action.preset };
     case 'TOGGLE_ALIGNMENT_GUIDES':
       return { ...state, showAlignmentGuides: !state.showAlignmentGuides };
+    case 'TOGGLE_SCENE_RECITATION':
+      return { ...state, showSceneRecitation: !state.showSceneRecitation };
     case 'TOGGLE_CONTROLS_COLLAPSED':
       return { ...state, controlsCollapsed: !state.controlsCollapsed };
     case 'SET_DIAGRAM_MODE':

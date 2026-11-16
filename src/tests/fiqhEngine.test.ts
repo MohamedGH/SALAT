@@ -8,6 +8,7 @@ import {
 } from '../modules/prayer/fiqhEngine';
 import {
   ALL_FIQH_RULES,
+  PRAYER_STEPS,
   SHURUT_CONDITIONS,
 } from '../modules/prayer/prayerData';
 
@@ -19,6 +20,11 @@ describe('fiqhEngine & prayerData', () => {
       obligations: 8,
       steps: 10,
     });
+    for (const step of PRAYER_STEPS) {
+      expect(['silent', 'spoken']).toContain(step.speechCue.mode);
+      expect(step.speechCue.instruction.en.length).toBeGreaterThan(0);
+      expect(step.speechCue.instruction.fr.length).toBeGreaterThan(0);
+    }
   });
 
   it('filters rules accurately across English, French, transliteration, and Arabic', () => {

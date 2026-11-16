@@ -79,6 +79,8 @@ export const UI_COPY = {
     hideControls: { en: 'Hide Controls', fr: 'Masquer' },
     showControls: { en: 'Show Controls', fr: 'Afficher' },
     alignmentGuides: { en: 'Alignment Guides', fr: 'Repères d’Alignement' },
+    sceneRecitation: { en: 'What to Say', fr: 'Paroles' },
+    whatToSayLabel: { en: 'What to say now', fr: 'À dire à cette étape' },
     cameraLabel: { en: 'Camera View', fr: 'Caméra' },
     speedLabel: { en: 'Speed', fr: 'Vitesse' },
     cameras: {

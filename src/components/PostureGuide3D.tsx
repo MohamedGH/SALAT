@@ -5,9 +5,11 @@ import {
   ChevronRight,
   ChevronUp,
   Compass,
+  Heart,
   Pause,
   Play,
   RotateCcw,
+  Volume2,
 } from 'lucide-react';
 import { pickText, UI_COPY, type Language } from '../modules/i18n/translations';
 import {
@@ -87,6 +89,7 @@ export function PostureGuide3D({ language }: PostureGuide3DProps) {
   const playbackSpeed = useAppSelector((s) => s.playbackSpeed);
   const cameraPreset = useAppSelector((s) => s.cameraPreset);
   const showAlignmentGuides = useAppSelector((s) => s.showAlignmentGuides);
+  const showSceneRecitation = useAppSelector((s) => s.showSceneRecitation);
   const controlsCollapsed = useAppSelector((s) => s.controlsCollapsed);
   const webglSupported = useAppSelector((s) => s.webglSupported);
 
@@ -233,7 +236,7 @@ export function PostureGuide3D({ language }: PostureGuide3DProps) {
       {/* Main 2-Zone Stage + Concept Deck */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* 3D Viewport Stage (Unobstructed Center + Collapsible Bottom Dock) */}
-        <div className="lg:col-span-8 relative bg-[#F2EFE9] border border-[#E5E0D8] rounded-2xl overflow-hidden h-[430px] sm:h-[520px] lg:h-[600px]">
+        <div className="lg:col-span-8 relative bg-[#F2EFE9] border border-[#E5E0D8] rounded-2xl overflow-hidden h-[500px] sm:h-[550px] lg:h-[600px]">
           {/* Isolated WebGL Mount Container */}
           {webglSupported ? (
             <div
@@ -252,21 +255,61 @@ export function PostureGuide3D({ language }: PostureGuide3DProps) {
             </div>
           )}
 
-          {/* Minimal Top-Left Unboxed Spec Overlay (No backdrop-blur over WebGL!) */}
-          <div className="pointer-events-none absolute top-4 left-4 z-10 bg-white/95 border border-[#E5E0D8] rounded-xl px-3.5 py-2">
-            <div className="flex items-center gap-2 text-xs text-[#5D6066]">
-              <span className="font-mono font-semibold text-[#0F5C4D] tabular-nums">
-                {String(activeStep.order).padStart(2, '0')}/10
-              </span>
-              <span aria-hidden="true">·</span>
-              <span className="font-medium text-[#18191C]">
-                {activeStep.transliteration}
-              </span>
-              <span aria-hidden="true">·</span>
-              <span>
-                {pickText(language, UI_COPY.categories[activeStep.category])}
-              </span>
+          {/* Top-Edge Semantic Overlay: Posture Spec (Left) + In-Scene What to Say Cue (Right) */}
+          <div className="pointer-events-none absolute top-3 inset-x-3 z-10 flex flex-col sm:flex-row sm:items-start justify-between gap-2">
+            <div className="pointer-events-auto self-start bg-white/95 border border-[#E5E0D8] rounded-xl px-3.5 py-2">
+              <div className="flex items-center gap-2 text-xs text-[#5D6066]">
+                <span className="font-mono font-semibold text-[#0F5C4D] tabular-nums">
+                  {String(activeStep.order).padStart(2, '0')}/10
+                </span>
+                <span aria-hidden="true">·</span>
+                <span className="font-medium text-[#18191C]">
+                  {activeStep.transliteration}
+                </span>
+                <span aria-hidden="true">·</span>
+                <span>
+                  {pickText(language, UI_COPY.categories[activeStep.category])}
+                </span>
+              </div>
             </div>
+
+            {showSceneRecitation && (
+              <div
+                aria-live="polite"
+                className="pointer-events-auto w-full sm:w-auto sm:max-w-[380px] bg-white/95 border border-[#E5E0D8] rounded-xl px-3.5 py-2.5 space-y-1"
+              >
+                <div className="flex items-center justify-between gap-3 text-[11px] text-[#5D6066]">
+                  <span className="inline-flex items-center gap-1.5 font-medium text-[#0F5C4D]">
+                    {activeStep.speechCue.mode === 'silent' ? (
+                      <Heart className="w-3.5 h-3.5 shrink-0" />
+                    ) : (
+                      <Volume2 className="w-3.5 h-3.5 shrink-0" />
+                    )}
+                    <span>
+                      {pickText(language, UI_COPY.guide3d.whatToSayLabel)}
+                    </span>
+                  </span>
+                  <span className="truncate">
+                    {pickText(language, activeStep.speechCue.instruction)}
+                  </span>
+                </div>
+
+                <p
+                  lang="ar"
+                  className="font-arabic text-lg sm:text-xl leading-snug text-[#18191C] text-right"
+                >
+                  {activeStep.recitationArabic}
+                </p>
+
+                <p className="text-xs font-semibold text-[#0F5C4D] leading-snug">
+                  {activeStep.recitationTranslit}
+                </p>
+
+                <p className="text-[11px] text-[#4A4D52] leading-snug line-clamp-2">
+                  {pickText(language, activeStep.recitationMeaning)}
+                </p>
+              </div>
+            )}
           </div>
 
           {/* Collapsible Bottom Control Dock (Zero Viewport Occlusion, Zero backdrop-blur) */}
@@ -372,8 +415,24 @@ export function PostureGuide3D({ language }: PostureGuide3DProps) {
                   ))}
                 </div>
 
-                {/* Speed & Alignment Guides Toggle */}
-                <div className="flex items-center gap-1.5">
+                {/* Speed, Recitation Cue & Alignment Guides Toggle */}
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      appStore.dispatch({ type: 'TOGGLE_SCENE_RECITATION' })
+                    }
+                    className={`min-h-[36px] px-2.5 inline-flex items-center gap-1.5 rounded-lg border text-[11px] font-medium transition-colors whitespace-nowrap shrink-0 ${
+                      showSceneRecitation
+                        ? 'bg-[#ECFDF5] border-[#0F5C4D] text-[#0F5C4D]'
+                        : 'bg-white border-[#E5E0D8] text-[#55585E]'
+                    }`}
+                  >
+                    <Volume2 className="w-3.5 h-3.5" />
+                    <span>
+                      {pickText(language, UI_COPY.guide3d.sceneRecitation)}
+                    </span>
+                  </button>
                   <button
                     type="button"
                     onClick={() =>

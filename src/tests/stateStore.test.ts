@@ -63,5 +63,9 @@ describe('stateManager', () => {
 
     store.dispatch({ type: 'DISMISS_ERROR', id: errItem.id });
     expect(store.getState().errorState.activeErrors).toHaveLength(0);
+
+    expect(store.getState().showSceneRecitation).toBe(true);
+    store.dispatch({ type: 'TOGGLE_SCENE_RECITATION' });
+    expect(store.getState().showSceneRecitation).toBe(false);
   });
 });

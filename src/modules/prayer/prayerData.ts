@@ -37,6 +37,10 @@ export interface PrayerStep {
   readonly recitationArabic: string;
   readonly recitationTranslit: string;
   readonly recitationMeaning: LocalizedText;
+  readonly speechCue: {
+    readonly mode: 'silent' | 'spoken';
+    readonly instruction: LocalizedText;
+  };
   readonly postureSummary: LocalizedText;
   readonly checkpoints: readonly LocalizedText[];
   readonly alignmentNote: LocalizedText;
@@ -767,6 +771,13 @@ export const PRAYER_STEPS: readonly PrayerStep[] = [
       en: 'Resolve sincerely in the heart which prayer you are offering and face the Qiblah.',
       fr: 'Formulez dans le cœur l’intention sincère de la prière face à la Qiblah.',
     },
+    speechCue: {
+      mode: 'silent',
+      instruction: {
+        en: 'Silent in the heart (Condition)',
+        fr: 'Silencieux dans le cœur (Condition)',
+      },
+    },
     postureSummary: {
       en: 'Stand upright with feet shoulder-width apart, toes pointing toward the Qiblah, gaze resting at the place of prostration.',
       fr: 'Tenez-vous droit, pieds écartés à largeur d’épaules vers la Qiblah, regard posé au point de prosternation.',
@@ -797,6 +808,13 @@ export const PRAYER_STEPS: readonly PrayerStep[] = [
     recitationMeaning: {
       en: 'God is the Greatest — entering the sacred state of prayer.',
       fr: 'Dieu est le Plus Grand — entrée solennelle dans l’état de prière.',
+    },
+    speechCue: {
+      mode: 'spoken',
+      instruction: {
+        en: 'Say once to enter prayer (Pillar)',
+        fr: 'Dire 1× pour entrer en prière (Pilier)',
+      },
     },
     postureSummary: {
       en: 'Raise both hands smoothly up to earlobes or shoulder level, palms facing forward toward the Qiblah with fingers naturally extended.',
@@ -829,6 +847,13 @@ export const PRAYER_STEPS: readonly PrayerStep[] = [
       en: 'Recite Surah Al-Fatihah (Pillar) followed by a short Surah in the first two Rak’ahs.',
       fr: 'Récitez Al-Fatihah (Pilier) suivie d’une courte sourate dans les deux premières Rak’ahs.',
     },
+    speechCue: {
+      mode: 'spoken',
+      instruction: {
+        en: 'Recite Al-Fatihah in every Rak’ah (Pillar)',
+        fr: 'Réciter Al-Fatihah dans chaque Rak’ah (Pilier)',
+      },
+    },
     postureSummary: {
       en: 'Place the right hand over the back of the left hand/wrist upon the chest, standing still and focused.',
       fr: 'Posez la main droite sur le dos de la main ou du poignet gauche sur la poitrine avec recueillement.',
@@ -859,6 +884,13 @@ export const PRAYER_STEPS: readonly PrayerStep[] = [
     recitationMeaning: {
       en: 'Glory be to my Lord, the Supreme.',
       fr: 'Gloire à mon Seigneur, l’Immense.',
+    },
+    speechCue: {
+      mode: 'spoken',
+      instruction: {
+        en: 'Say "Allahu Akbar" descending · Say Tasbih 3× (1× Wajib)',
+        fr: 'Dire « Allahu Akbar » en descendant · Tasbih 3× (1× Wajib)',
+      },
     },
     postureSummary: {
       en: 'Say "Allahu Akbar" and hinge at the hips until your back and head form a level horizontal line (90°), gripping knees firmly.',
@@ -891,6 +923,13 @@ export const PRAYER_STEPS: readonly PrayerStep[] = [
       en: 'God hears the one who praises Him. Our Lord, to You belongs all praise.',
       fr: 'Dieu entend celui qui Le loue. Notre Seigneur, à Toi la louange.',
     },
+    speechCue: {
+      mode: 'spoken',
+      instruction: {
+        en: 'First phrase while rising · Second upright (Wajib)',
+        fr: '1re phrase en montant · 2e une fois droit (Wajib)',
+      },
+    },
     postureSummary: {
       en: 'Rise smoothly from Ruku back to a fully upright standing posture with arms relaxed by your sides (or folded) and pause calmly.',
       fr: 'Redressez-vous complètement à la verticale, bras relâchés le long du corps, et marquez un arrêt posé.',
@@ -921,6 +960,13 @@ export const PRAYER_STEPS: readonly PrayerStep[] = [
     recitationMeaning: {
       en: 'Glory be to my Lord, the Most High.',
       fr: 'Gloire à mon Seigneur, le Très-Haut.',
+    },
+    speechCue: {
+      mode: 'spoken',
+      instruction: {
+        en: 'Say "Allahu Akbar" descending · Say Tasbih 3× (1× Wajib)',
+        fr: 'Dire « Allahu Akbar » en descendant · Tasbih 3× (1× Wajib)',
+      },
     },
     postureSummary: {
       en: 'Say "Allahu Akbar" and descend into prostration on 7 points: forehead + nose, both palms, both knees, and the toes of both feet.',
@@ -953,6 +999,13 @@ export const PRAYER_STEPS: readonly PrayerStep[] = [
       en: 'My Lord, forgive me; my Lord, forgive me.',
       fr: 'Seigneur, pardonne-moi ; Seigneur, pardonne-moi.',
     },
+    speechCue: {
+      mode: 'spoken',
+      instruction: {
+        en: 'Say "Allahu Akbar" rising · Say 2× while seated (1× Wajib)',
+        fr: 'Dire « Allahu Akbar » en montant · Dire 2× assis (1× Wajib)',
+      },
+    },
     postureSummary: {
       en: 'Rise with "Allahu Akbar" and sit calmly on your left foot (laid flat) while keeping the right foot upright on its toes, hands resting on thighs.',
       fr: 'Relevez-vous avec « Allahu Akbar », asseyez-vous sur le pied gauche allongé, pied droit dressé, mains sur les cuisses.',
@@ -983,6 +1036,13 @@ export const PRAYER_STEPS: readonly PrayerStep[] = [
     recitationMeaning: {
       en: 'Glory be to my Lord, the Most High — completing the Rak’ah cycle.',
       fr: 'Gloire à mon Seigneur, le Très-Haut — clôture de l’unité (Rak’ah).',
+    },
+    speechCue: {
+      mode: 'spoken',
+      instruction: {
+        en: 'Say "Allahu Akbar" descending · Say Tasbih 3× (1× Wajib)',
+        fr: 'Dire « Allahu Akbar » en descendant · Tasbih 3× (1× Wajib)',
+      },
     },
     postureSummary: {
       en: 'Prostrate a second time identically to the first on all 7 bones with calm reflection and stillness.',
@@ -1015,6 +1075,13 @@ export const PRAYER_STEPS: readonly PrayerStep[] = [
       en: 'All greetings, prayers, and pure words belong to God. Recite Tashahhud (and Salawat in the final sitting).',
       fr: 'Toutes les salutations, prières et bonnes œuvres appartiennent à Dieu. Récitez le Tashahhud et les salutations.',
     },
+    speechCue: {
+      mode: 'spoken',
+      instruction: {
+        en: 'Recite softly while seated (Wajib / Pillar)',
+        fr: 'Réciter doucement assis (Wajib / Pilier)',
+      },
+    },
     postureSummary: {
       en: 'Sit upright with left hand flat on left thigh and right hand on right thigh, gently pointing the right index finger toward the Qiblah.',
       fr: 'Assis droit, main gauche à plat sur la cuisse gauche, index droit légèrement pointé vers la Qiblah.',
@@ -1045,6 +1112,13 @@ export const PRAYER_STEPS: readonly PrayerStep[] = [
     recitationMeaning: {
       en: 'Peace and mercy of God be upon you — concluding the prayer with peace.',
       fr: 'Que la paix et la miséricorde de Dieu soient sur vous — clôture de la prière.',
+    },
+    speechCue: {
+      mode: 'spoken',
+      instruction: {
+        en: 'Say turning right, then repeat turning left (Pillar)',
+        fr: 'Dire en tournant à droite, puis à gauche (Pilier)',
+      },
     },
     postureSummary: {
       en: 'While seated upright, turn your head smoothly to the right saying the Taslim, then turn smoothly to the left repeating it.',
